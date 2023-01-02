@@ -7,7 +7,7 @@
 #include <time.h>
 #include <string.h>
 #include <malloc.h>
-//#include <windows.h>
+#include <windows.h>
 const int col = 50; // количество текстовых ячеек в строке
 const int row = 135; // количество строк
 int ckolko();
@@ -27,11 +27,6 @@ char** put_vids( char** vi, int uc );
 int main()
 {
 	system("chcp 1251"); system("cls"); int uc = ckolko();
-	HANDLE cc_na_con = GetStdHandle( STD_OUTPUT_HANDLE );
-	SMALL_RECT windowSize = { 0, 0, col - 1, row - 1 };
-	SetConsoleWindowInfo( cc_na_con, TRUE, &windowSize );
-	SetConsoleTextAttribute( cc_na_con, FOREGROUND_RED |	FOREGROUND_GREEN | FOREGROUND_INTENSITY );
-	system( "title Интерактивный справочник по результатам XXII-ого семиборья по Воронежской области" );
 	char a; float ** iArr = sozdArr(uc); zapol(iArr,uc);
 	char** name = (char**)calloc(uc, sizeof(char*));
 	put_nam( name, uc );
@@ -90,6 +85,11 @@ int main()
 }
 int ckolko() {
 	FILE* mf;  char str[60];  char* estr;
+	HANDLE cc_na_con = GetStdHandle( STD_OUTPUT_HANDLE );
+	SMALL_RECT windowSize = { 0, 0, col + 10, row + 1 };
+	SetConsoleWindowInfo( cc_na_con, TRUE, &windowSize );
+	SetConsoleTextAttribute( cc_na_con, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY );
+	system( "title Интерактивный справочник по результатам XXII-ого семиборья по Воронежской области" );
 	//printf("Открытие файла : ");
 	mf = fopen("1.txt", "r");
 	if (mf == NULL) { printf("ошибка\n"); return -1; }
@@ -139,15 +139,18 @@ float** zapol(float** prt, int r)
 }
 void printtt(float** Arr, int uc, char** name, char** name2, int t)
 {
-	printf("	Вид спорта	");
-	for (int i = 0; i < 7; i++) printf("| %.12s	", name2[i] );
-	puts("\n --------------------------------------------------------------------------------------------------------------------------------");
+	puts( "\n------------------------------------------------------------------------------------------------------------------------" );
+	printf("   Вид спорта   ");
+	for (int i = 0; i < 6; i++) printf("|%.14s", name2[i] ); printf( "|%.13s", name2 [6] );
+	puts("\n------------------------------------------------------------------------------------------------------------------------");
 	for (int i = 0; i < t; i++)
 	{
-		printf( " %.15s	", name[i] );
+		printf( "%.15s	", name[i] );
 		for (int j = 0; j < 7; ++j) { 
-			if (j < 4) printf( "| %.3f m	", *( *( Arr + i ) + j ) ); 
-			if (j > 3) printf( "| %.3f c	", *( *( Arr + i ) + j ) );
+			if (j < 4) printf( "|   %3.3f m   ", *( *( Arr + i ) + j ) ); 
+			if (j > 3 && j<6) printf( "|   %3.3f c   ", *( *( Arr + i ) + j ) );
+			if (j==6) printf( "|   %3.3f c", *( *( Arr + i ) + j ) );
+			if (j==0 || j==1) printf(" ");
 		}
 		printf("\n");
 	} printf("\n");
