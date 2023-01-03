@@ -1,0 +1,18 @@
+﻿  nkure.c
+C:\Users\User\Source\Repos\nkursach\nkure.c(89,50): warning C4474: "printf" : для строки формата передано слишком много аргументов
+C:\Users\User\Source\Repos\nkursach\nkure.c(89,50): message : заполнители и их параметры ожидают переменное число аргументов в количестве 0, но было предоставлено 1
+C:\Users\User\Source\Repos\nkursach\nkure.c(191,1): warning C4305: инициализация: усечение из "double" в "float"
+C:\Users\User\Source\Repos\nkursach\nkure.c(192,1): warning C4305: инициализация: усечение из "double" в "float"
+C:\Users\User\Source\Repos\nkursach\nkure.c(193,1): warning C4305: инициализация: усечение из "double" в "float"
+C:\Users\User\Source\Repos\nkursach\nkure.c(224,233): warning C4020: imin: слишком много фактических параметров
+C:\Users\User\Source\Repos\nkursach\nkure.c(228,76): warning C4244: =: преобразование "float" в "int", возможна потеря данных
+C:\Users\User\Source\Repos\nkursach\nkure.c(233,76): warning C4244: =: преобразование "float" в "int", возможна потеря данных
+C:\Users\User\Source\Repos\nkursach\nkure.c(248,12): warning C4098: cas33: функция типа "void", возвращающая значение
+C:\Users\User\Source\Repos\nkursach\nkure.c(250,45): warning C4098: cas33: функция типа "void", возвращающая значение
+C:\Users\User\Source\Repos\nkursach\nkure.c(259,19): warning C4133: функция: несовместимые типы - из "int *" в "float *"
+C:\Users\User\Source\Repos\nkursach\nkure.c(188): warning C4716: sortlr: должна возвращать значение
+C:\Users\User\Source\Repos\nkursach\nkure.c(197): warning C4715: formuls2: значение возвращается не при всех путях выполнения
+C:\Users\User\Source\Repos\nkursach\nkure.c(279): warning C4715: cumcrzmm: значение возвращается не при всех путях выполнения
+C:\Users\User\Source\Repos\nkursach\nkure.c(287): warning C4716: put_nam: должна возвращать значение
+C:\Users\User\Source\Repos\nkursach\nkure.c(295): warning C4716: put_vids: должна возвращать значение
+  nkursach.vcxproj -> C:\Users\User\Source\Repos\nkursach\x64\Debug\nkursach.exe
