@@ -10,7 +10,7 @@
 #include <windows.h>
 int ckolko();
 float** zapol(float** prt, int r);
-void printtt(float** Arr, int uc, char** name, char** name2, int t);
+void printtt(float** Arr, char** name, char** name2, int t);
 int sortlr(float* mass, float* taz, int n);
 float formuls2(float n, int t);
 void cas11(float** rezg, int m, char** name, char** name2); 
@@ -26,7 +26,6 @@ int main()
 	system("chcp 1251"); 	
 	system("cls"); 
 	int uc = ckolko(); // расчет количества участников
-	char a; //переменная для безотрывных запросов пользователя
 	float ** iArr = ( float** ) calloc( uc, sizeof( float* ) );// создание массива результатов 
 	zapol(iArr,uc);
 	char** name = (char**)calloc(uc, sizeof(char*)); //создание массива ФИО участников
@@ -34,6 +33,7 @@ int main()
 	char** vidsp = (char**)calloc(7, sizeof(char*));//создание массива видов состязаний
 	put_vids( vidsp );
 	printf("	Вас приветствует справочник по результатам XXII-ого семиборья по Воронежской области\n\n");
+	char a; //переменная для безотрывных запросов пользователя
 	do {
 		char c; //номер требуемого запроса от пользователя
 		printf("Выберите интересующее действие: \n0 - Узнать исходные результаты соревнований\n1 - Узнать результаты участника соревнований \n2 - Узнать результаты вида состязаний \n3 - Изменение данных участника \n4 - Вывести итоговый рейтинг\n5 - Стереть результаты запросов \n->>>> ");
@@ -41,7 +41,7 @@ int main()
 		switch (c)
 		{
 		case '0':
-			printtt( iArr, uc, name, vidsp, uc ); //печать исходной таблицы данных
+			printtt( iArr, name, vidsp, uc ); //печать исходной таблицы данных
 			break;
 		case '1':
 			printf("Введите номер участника (1-%d): ", uc); 
@@ -57,7 +57,7 @@ int main()
 			break;
 		case '3': 
 			printf( "	Таблица данных по разным дисциплинам для первых 5 участников для сравнения\n" );
-			printtt(iArr, uc, name, vidsp, 5);//вывод части таблицы во избежание ошибок
+			printtt(iArr, name, vidsp, 5);//вывод части таблицы во избежание ошибок
 			printf("Введите номер участника и вид спорта\n"); 
 			int nom, vss;
 			scanf("%d", &nom); 	printf("%s", name[nom - 1]);
@@ -142,7 +142,7 @@ float** zapol(float** prt, int r)
 	return prt;
 	fclose(in);
 }
-void printtt(float** Arr, int uc, char** name, char** name2, int t)
+void printtt(float** Arr, char** name, char** name2, int t)
 {
 	printf( "------------------------------------------------------------------------------------------------------------------------\n\n" );
 	printf("   Вид спорта   ");
@@ -181,6 +181,8 @@ int sortlr(float* mass, float* taz, int n)
 		if (noSwap == 1)//проверка на отсутствие обмена
 			break;
 	}
+	return mass; 
+	return taz;
 }
 float formuls2(float n, int t)
 {
@@ -198,10 +200,9 @@ void cas11(float** rezg, int m, char** name, char** name2) {
 	float r = 0;  char razm = 'm'; float cumm = 0;
 	for (int i = 0; i < 7; i++)
 	{
-		if (i > 3) razm = 'c';
+		if (i == 4) razm = 'c';
 		r = formuls2(rezg[m - 1][i], i); cumm += formuls2(rezg[m - 1][i], i);
-		if (i != 5) printf("    %s |	%0.3f	%c	|	%0.3f	\n", name[i], rezg[m - 1][i], razm, r);
-		else printf("    %s |	%0.3f	%c	|	%0.3f		\n", name[i], rezg[m - 1][i], razm, r);
+		printf("    %s |	%0.3f	%c	|	%0.3f	\n", name[i], rezg[m - 1][i], razm, r);
 	}printf("\n");
 	printf("Общая сумма очков участника соревнований: %0.3f\n\n", cumm);
 }
@@ -211,7 +212,7 @@ void cas22(float** rezg, int m, int uc, char** name, char** name2) {
 	printf("   Набранные баллы	|	Результат	|       Участник  	\n");
 	printf("-------------------------------------------------------------------------\n");
 	char razm = 'm'; float r1;
-	if (m > 3) razm = 'c'; printf("	");
+	if (m == 4) razm = 'c'; printf("	");
 	for (int i = 0; i < uc; i++) {
 		r1 = formuls2(rezg[i][m], m);
 		printf("%0.2f		|	%0.3f	%c	|	%s	", r1, rezg[i][m], razm, name[i]);
@@ -249,7 +250,10 @@ void cas33(float** rezg, int uc, char** name) {
 		puts("error"); 
 		return -1;
 	}
-	if (fin == NULL) { puts("error"); return -1; }
+	if (fin == NULL) { 
+		puts("error"); 
+		return -1; 
+	}
 	for (int i = 0; i < uc; i++)//заполнение новых массивов
 	{
 		fin[i] = i;
@@ -290,7 +294,9 @@ char** put_nam( char** name, int uc ) {
 	for (int q = 0; q < uc; q++) {
 		name [q] = ( char* ) calloc( 15, sizeof( char ) ); //двумерный массив имён
 		fgets( str, sizeof( str ), file ); strcpy( name [q], str ); //заполнение значениями
-	} 	fclose( file );
+	} 	
+	return name;
+	fclose( file );
 }
 char** put_vids( char** vi) {
 	FILE* fle;	fle = fopen( "4.txt", "r" );
@@ -298,5 +304,7 @@ char** put_vids( char** vi) {
 	for (int q = 0; q < 7; q++) {
 		vi [q] = ( char* ) calloc( 20, sizeof( char ) ); //двумерный массив видов спорта
 		fgets( str, sizeof( str ), fle ); strcpy( vi [q], str ); //заполнение значениями
-	}	fclose( fle );
+	}	
+	return vi;
+	fclose( fle );
 }
